@@ -81,10 +81,40 @@
 ;(find-first-index nil? [])                                    ;=> nil
 
 (defn avg [a-seq]
-  -1)
+  (if (empty? a-seq)
+    0
+    (/ (apply + a-seq) (count a-seq))))
+
+;(avg [1 2 3])   ;=> 2
+;(avg [0 0 0 4]) ;=> 1
+;(avg [1 0 0 1]) ;=> 1/2 ;; or 0.5
+
+;(vals (frequencies [1 2 1]))
+;(filter #(odd? (val %)) {1 2 4 1})
+
+(defn odd-ones [a-map]
+   (filter #(odd? (val %)) a-map))
+
+;(odd-ones {2 1, 3 4})
+;(vec-to-map [[1 2] [3 4]])
+
+(defn vec-to-map [vec-of-pairs]
+  (reduce (fn [a-map a-pair]
+            (let [first-elem (first a-pair)
+                  second-elem (-> a-pair rest first)]
+              (assoc a-map first-elem second-elem)))
+          {}
+          vec-of-pairs))
 
 (defn parity [a-seq]
-  ":(")
+  (let [freq-map (frequencies a-seq)]
+    (-> freq-map
+        odd-ones
+        vec-to-map
+        keys
+        (into #{}))))
+
+;(parity [1 2 2 4])
 
 (defn fast-fibo [n]
   ":(")
