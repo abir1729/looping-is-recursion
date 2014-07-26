@@ -117,8 +117,39 @@
 ;(parity [1 2 2 4])
 
 (defn fast-fibo [n]
-  ":(")
+  (loop [a 0
+         b 1
+         c n]
+    (if (zero? c)
+      a
+      (recur b (+ a b) (dec c)))))
+
+;(fast-fibo 0) ;=> 0
+;(fast-fibo 1) ;=> 1
+;(fast-fibo 2) ;=> 1
+;(fast-fibo 3) ;=> 2
+;(fast-fibo 4) ;=> 3
+;(fast-fibo 5) ;=> 5
+;(fast-fibo 6) ;=> 8
+
+(contains? #{1 2 3} 1)
+;(#{1 2 3})
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [unique-elems #{}
+         acc []
+         the-seq a-seq]
+    (if (or (empty? the-seq) (contains? unique-elems (first the-seq)))
+      acc
+      (recur (conj unique-elems (first the-seq))
+             (conj acc (first the-seq))
+             (rest the-seq)))))
+
+;(cut-at-repetition [1 1 1 1 1])
+;=> [1] doesn't have to be a vector, a sequence is fine too
+;(cut-at-repetition [:cat :dog :house :milk 1 :cat :dog])
+;=> [:cat :dog :house :milk 1]
+;(cut-at-repetition [0 1 2 3])
+;=> [0 1 2 3 4 5]
+;(contains? #{1} nil)
 
